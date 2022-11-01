@@ -30,6 +30,7 @@ const FileUploader = (props) => {
         ref={hiddenFileInput}
         onChange={handleChange}
         className="hidden"
+        accept='image/*'
         // style={{display: 'none'}}
       />
     </>
