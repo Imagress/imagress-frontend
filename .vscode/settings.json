@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/deployphp/deployer/master/src/schema.json": "file:///Users/suppachaibrikl/code/imagress-frontend/.github/workflows/deploy.yml"
+    }
+}
