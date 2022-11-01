@@ -16,7 +16,7 @@ const FileUploader = (props) => {
   // Call a function (passed as a prop from the parent component)
   // to handle the user-selected file 
   const handleChange = (event) => {
-    const fileUploaded = event.target.files[0];
+    const fileUploaded = event.target.files;
     // console.log(event.target.files[0]);
     props.handleFile(fileUploaded);
   };
@@ -31,6 +31,7 @@ const FileUploader = (props) => {
         onChange={handleChange}
         className="hidden"
         accept='image/*'
+        multiple={true}
         // style={{display: 'none'}}
       />
     </>

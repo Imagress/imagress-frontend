@@ -4,28 +4,29 @@ import ImagressLogo from "./components/imagress-logo";
 import ProcessingComponent from "./components/processing/processing";
 
 function App() {
-  const [pickedFile, setPickedFile] = useState(null);
+  const [pickedFiles, setPickedFiles] = useState([]);
 
   const isFileImage = (file) => {
     const acceptedImageTypes = ["image/gif", "image/jpeg", "image/png"];
     return file && acceptedImageTypes.includes(file["type"]);
   };
 
-  const handleFilePick = (file) => {
-    console.log(file);
-    if (isFileImage(file)) {
-      setPickedFile(file);
-    } else {
-      setPickedFile(null);
-    }
-    console.log(isFileImage(file));
+  const handleFilePick = (files) => {
+    // console.log(files);
+    setPickedFiles(files);
+    // if (isFileImage(files)) {
+      // setPickedFiles(files);
+    // } else {
+      // setPickedFiles(null);
+    // }
+    // console.log(isFileImage(files));
   };
 
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center overflow-clip">
       <ImagressLogo />
-      {!pickedFile && <FileUploader handleFile={handleFilePick} />}
-      {pickedFile && <ProcessingComponent file={pickedFile}/>}
+      {pickedFiles.length === 0 && <FileUploader handleFile={handleFilePick} />}
+      {pickedFiles.length > 0 && <ProcessingComponent files={pickedFiles} />}
     </div>
   );
 }
