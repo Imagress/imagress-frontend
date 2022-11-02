@@ -12,19 +12,18 @@ function App() {
   };
 
   const handleFilePick = (files) => {
-    // console.log(files);
     setPickedFiles(files);
-    // if (isFileImage(files)) {
-      // setPickedFiles(files);
-    // } else {
-      // setPickedFiles(null);
-    // }
-    // console.log(isFileImage(files));
+  };
+
+  const clearFiles = () => {
+    setPickedFiles([]);
   };
 
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center overflow-clip">
-      <ImagressLogo />
+      <div className="cursor-pointer" onClick={clearFiles}>
+        <ImagressLogo />
+      </div>
       {pickedFiles.length === 0 && <FileUploader handleFile={handleFilePick} />}
       {pickedFiles.length > 0 && <ProcessingComponent files={pickedFiles} />}
     </div>
