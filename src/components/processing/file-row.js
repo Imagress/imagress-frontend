@@ -21,8 +21,14 @@ const FileRow = (props) => {
   return (
     <div className="flex flex-row h-[70px] items-center justify-around">
       <img src={ImageLogo} alt="logo" />
-      <p>{file.name}</p>
-      <p className="text-[#8E8E8E] text-sm">{humanFileSize(file.size)}</p>
+      <p className="whitespace-pre-line">
+        <div className="w-32 text-ellipsis flex flex-row">
+          <p className="truncate ...">{file.name.split(".")[0]}</p>
+          <p>{`.${file.type.split("/")[1]}`}</p>
+        </div>
+        {/* <span>{`.${file.type.split("/")[1]}`}</span> */}
+      </p>
+      <p className="text-[#8E8E8E] text-sm text-center w-16">{humanFileSize(file.size)}</p>
       <select
         value={option}
         onChange={handleOptionChange}
