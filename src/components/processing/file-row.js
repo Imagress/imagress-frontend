@@ -58,6 +58,7 @@ const FileRow = (props) => {
       {/* <button className="bg-black w-[100px] h-[40px] px-2 rounded-md text-[#215FF6] font-bold text-lg">
         Start
       </button> */}
+      <button className="w-[150px] h-[50px] text-black bg-white rounded-lg">Done</button>
       <img
         src={CloseIcon}
         alt="logo"
