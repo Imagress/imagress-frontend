@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import EditButton from "./components/edit-button";
 import FileUploader from "./components/file-uploader";
 import HorizontalLine from "./components/horizontal-line";
@@ -10,16 +10,19 @@ function App() {
   const [pickedFiles, setPickedFiles] = useState([]);
   const [showEdit, setShowEdit] = useState(false);
 
+  useEffect(() => {
+    const tmp = Array.from(pickedFiles);
+    if (tmp.length === 0) {
+      setShowEdit(false);
+    }
+  }, [pickedFiles]);
+
   const isFileImage = (file) => {
     const acceptedImageTypes = ["image/gif", "image/jpeg", "image/png"];
     return file && acceptedImageTypes.includes(file["type"]);
   };
 
   const handleFilePick = (files) => {
-    // console.log((Array.from(files)).length);
-    if (Array.from(files).length === 0) {
-      setShowEdit(false);
-    }
     setPickedFiles(files);
   };
 
@@ -34,9 +37,6 @@ function App() {
   };
 
   const updateFileList = (files) => {
-    if (files.length === 0) {
-      setShowEdit(false);
-    }
     setPickedFiles(files);
   };
 
