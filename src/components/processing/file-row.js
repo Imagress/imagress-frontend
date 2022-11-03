@@ -83,6 +83,7 @@ const FileRow = (props) => {
         height={40}
         style={{ width: 25, height: 25 }}
         onClick={() => {
+          setPopup(false);
           props.onRemove(file);
         }}
       />
