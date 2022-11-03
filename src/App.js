@@ -17,7 +17,7 @@ function App() {
 
   const handleFilePick = (files) => {
     // console.log((Array.from(files)).length);
-    if ((Array.from(files)).length === 0) {
+    if (Array.from(files).length === 0) {
       setShowEdit(false);
     }
     setPickedFiles(files);
@@ -45,7 +45,7 @@ function App() {
       <div className="cursor-pointer" onClick={clearFiles}>
         <ImagressLogo />
       </div>
-      <div className="w-full h-[500px] bg-[#215FF6] rounded-3xl flex justify-around px-16">
+      <div className="w-full lg:h-[500px] h-full bg-[#215FF6] rounded-3xl flex justify-around px-16 flex-col lg:flex-row items-center lg:gap-0 gap-10">
         <div className="flex h-full">
           <FileUploader handleFile={handleFilePick} />
         </div>
@@ -55,8 +55,8 @@ function App() {
             enabled={pickedFiles.length > 0}
             onClick={handleEditClick}
           />
-          <HorizontalLine />
         </div>
+        <HorizontalLine />
         <div className="flex h-full">
           <ProcessButton enabled={false} />
         </div>
