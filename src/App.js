@@ -42,7 +42,13 @@ function App() {
 
   return (
     <div className="w-full flex flex-col items-center overflow-clip px-10 gap-5 py-10">
-      <div className="cursor-pointer" onClick={clearFiles}>
+      <div
+        className="cursor-pointer"
+        onClick={() => {
+          clearFiles();
+          window.location.reload();
+        }}
+      >
         <ImagressLogo />
       </div>
       <div className="w-full lg:h-[500px] h-full bg-[#215FF6] rounded-3xl flex justify-around px-16 flex-col lg:flex-row items-center lg:gap-0 gap-10">

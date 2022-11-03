@@ -22,7 +22,7 @@ const FileRow = (props) => {
   };
 
   return (
-    <div className="flex flex-row h-[70px] items-center justify-around bg-[#215FF6] rounded-xl text-white">
+    <div className="flex flex-row h-[70px] items-center justify-around bg-[#215FF6] rounded-xl text-white font-semibold">
       <img src={FileLogo} alt="logo" className="w-[50px]" />
       <div className="whitespace-pre-line">
         <div className="w-64 text-ellipsis flex flex-row">
@@ -64,7 +64,7 @@ const FileRow = (props) => {
           Edit
         </button>
         {popup && (
-          <div className="absolute top-16 -left-[110px] z-50">
+          <div className="absolute top-16 -left-[300px] z-50">
             <EditMenu file={file} />
           </div>
         )}
