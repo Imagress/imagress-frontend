@@ -35,7 +35,7 @@ const FileRow = (props) => {
       <div className="flex flex-row justify-center items-center gap-2">
         <p>Convert To</p>
         <select
-          defaultValue={"..."}
+          // defaultValue={"..."}
           value={option}
           onChange={handleOptionChange}
           className="bg-white text-black w-[100px] h-[50px] px-2 rounded-md"

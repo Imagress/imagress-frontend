@@ -9,12 +9,17 @@ import ProcessingComponent from "./components/processing/processing";
 function App() {
   const [pickedFiles, setPickedFiles] = useState([]);
   const [showEdit, setShowEdit] = useState(false);
+
   const isFileImage = (file) => {
     const acceptedImageTypes = ["image/gif", "image/jpeg", "image/png"];
     return file && acceptedImageTypes.includes(file["type"]);
   };
 
   const handleFilePick = (files) => {
+    // console.log((Array.from(files)).length);
+    if ((Array.from(files)).length === 0) {
+      setShowEdit(false);
+    }
     setPickedFiles(files);
   };
 
