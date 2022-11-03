@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import CloseIcon from "./close.svg";
 import FileLogo from "../../svg/file.svg";
-const OPTIONS = ["JPG", "PNG"];
+import EditMenu from "./edit-menu";
+const OPTIONS = ["JPEG", "PNG", "GIF", "TIFF", "WEBP"];
 const FileRow = (props) => {
   const [option, setOption] = useState("...");
+  const [popup, setPopup] = useState(false);
   const file = props.file;
 
   function humanFileSize(size) {
@@ -40,7 +42,7 @@ const FileRow = (props) => {
           onChange={handleOptionChange}
           className="bg-white text-black w-[100px] h-[50px] px-2 rounded-md"
         >
-          <option disabled value={"..."}>
+          <option disabled value={"..."} className="hidden">
             ...
           </option>
           {OPTIONS.map((option, index) => {
@@ -52,13 +54,27 @@ const FileRow = (props) => {
           })}
         </select>
       </div>
-      <button className="bg-white text-black w-[100px] h-[50px] px-2 rounded-md">
-        Edit
-      </button>
+      <div className="relative">
+        <button
+          className="bg-white text-black w-[100px] h-[50px] px-2 rounded-md"
+          onClick={() => {
+            setPopup(!popup);
+          }}
+        >
+          Edit
+        </button>
+        {popup && (
+          <div className="absolute top-16 -left-[110px] z-50">
+            <EditMenu file={file} />
+          </div>
+        )}
+      </div>
       {/* <button className="bg-black w-[100px] h-[40px] px-2 rounded-md text-[#215FF6] font-bold text-lg">
         Start
       </button> */}
-      <button className="w-[150px] h-[50px] text-black bg-white rounded-lg">Done</button>
+      <button className="w-[150px] h-[50px] text-black bg-white rounded-lg">
+        Done
+      </button>
       <img
         src={CloseIcon}
         alt="logo"
