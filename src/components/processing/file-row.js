@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import ImageLogo from "./image-icon.svg";
 import CloseIcon from "./close.svg";
+import FileLogo from "../../svg/file.svg";
 const OPTIONS = ["JPG", "PNG"];
 const FileRow = (props) => {
-  const [option, setOption] = useState("JPG");
+  const [option, setOption] = useState("...");
   const file = props.file;
+
   function humanFileSize(size) {
     var i = size === 0 ? 0 : Math.floor(Math.log(size) / Math.log(1024));
     return (
@@ -19,35 +20,44 @@ const FileRow = (props) => {
   };
 
   return (
-    <div className="flex flex-row h-[70px] items-center justify-around">
-      <img src={ImageLogo} alt="logo" />
-      <p className="whitespace-pre-line">
-        <div className="w-32 text-ellipsis flex flex-row">
-          <p className="truncate ...">{file.name.split(".")[0]}</p>
-          <p>{`.${file.type.split("/")[1]}`}</p>
+    <div className="flex flex-row h-[70px] items-center justify-around bg-[#215FF6] rounded-xl text-white">
+      <img src={FileLogo} alt="logo" className="w-[50px]" />
+      <div className="whitespace-pre-line">
+        <div className="w-64 text-ellipsis flex flex-row">
+          <span className="truncate ...">{file.name.split(".")[0]}</span>
+          <span>{`.${file.type.split("/")[1]}`}</span>
         </div>
         {/* <span>{`.${file.type.split("/")[1]}`}</span> */}
-      </p>
-      <p className="text-[#8E8E8E] text-sm text-center w-16">{humanFileSize(file.size)}</p>
-      <select
-        value={option}
-        onChange={handleOptionChange}
-        className="bg-transparent w-[100px] h-[40px] px-2 border-gray-300 border-2 rounded-md"
-      >
-        {OPTIONS.map((option, index) => {
-          return (
-            <option key={`option-${index}`} value={option}>
-              {option}
-            </option>
-          );
-        })}
-      </select>
-      <button className="bg-transparent w-[50px] h-[40px] px-2 border-gray-300 border-2 rounded-md font-extrabold">
-        ...
+      </div>
+      {/* <p className="text-[#8E8E8E] text-sm text-center w-16">
+        {humanFileSize(file.size)}
+      </p> */}
+      <div className="flex flex-row justify-center items-center gap-2">
+        <p>Convert To</p>
+        <select
+          defaultValue={"..."}
+          value={option}
+          onChange={handleOptionChange}
+          className="bg-white text-black w-[100px] h-[50px] px-2 rounded-md"
+        >
+          <option disabled value={"..."}>
+            ...
+          </option>
+          {OPTIONS.map((option, index) => {
+            return (
+              <option key={`option-${index}`} value={option}>
+                {option}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+      <button className="bg-white text-black w-[100px] h-[50px] px-2 rounded-md">
+        Edit
       </button>
-      <button className="bg-black w-[100px] h-[40px] px-2 rounded-md text-[#215FF6] font-bold text-lg">
+      {/* <button className="bg-black w-[100px] h-[40px] px-2 rounded-md text-[#215FF6] font-bold text-lg">
         Start
-      </button>
+      </button> */}
       <img
         src={CloseIcon}
         alt="logo"
@@ -55,6 +65,9 @@ const FileRow = (props) => {
         width={40}
         height={40}
         style={{ width: 25, height: 25 }}
+        onClick={() => {
+          props.onRemove(file);
+        }}
       />
     </div>
   );
