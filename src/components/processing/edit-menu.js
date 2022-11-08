@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import FlipHorizontalIcon from "../../svg/flip-horizontal.svg";
 import FlipVerticalIcon from "../../svg/flip-vertical.svg";
 import ResizeIcon from "../../svg/resize.svg";
@@ -21,6 +21,8 @@ import NegateDisabledIcon from "../../svg/negate-disabled.svg";
 import NormalizeDisabledIcon from "../../svg/normalize-disabled.svg";
 import TintDisabledIcon from "../../svg/tint-disabled.svg";
 import GrayscaleDisabledIcon from "../../svg/grayscale-disabled.svg";
+import RotateIcon from "../../svg/rotate.svg";
+import RotateDisabledIcon from "../../svg/rotate-disabled.svg";
 
 const EditMenu = (props) => {
   const [options, setOptions] = useState({
@@ -29,13 +31,14 @@ const EditMenu = (props) => {
     flipVertical: false,
     resize: { width: 0, height: 0 },
     sharpen: 0,
-    median: false,
+    median: 0,
     blur: 0,
-    flatten: false,
+    flatten: "",
     negate: false,
     normalize: false,
     tint: { r: 0, g: 0, b: 0 },
     greyscale: false,
+    rotate: 0,
   });
 
   const [showMenu, setShowMenu] = useState({
@@ -43,6 +46,9 @@ const EditMenu = (props) => {
     sharpen: false,
     blur: false,
     tint: false,
+    flatten: false,
+    median: false,
+    rotate: false,
   });
 
   const handleResizeChange = (e) => {
@@ -170,6 +176,16 @@ const EditMenu = (props) => {
         }}
       />
       <IconMenuButton
+        icon={options.rotate > 0 ? RotateIcon : RotateDisabledIcon}
+        alt="rotate"
+        onClick={() => {
+          toggleMenu("rotate");
+          // let showTmp = { ...showMenu };
+          // showTmp.resize = !showTmp.resize;
+          // setShowMenu(showTmp);
+        }}
+      />
+      <IconMenuButton
         icon={options.sharpen > 0 ? SharpenIcon : SharpenDisabledIcon}
         alt="sharpen"
         onClick={() => {
@@ -183,9 +199,7 @@ const EditMenu = (props) => {
         icon={options.median ? MedianIcon : MedianDisabledIcon}
         alt="median"
         onClick={() => {
-          let tmp = { ...options };
-          tmp.median = !tmp.median;
-          setOptions(tmp);
+          toggleMenu("median");
         }}
       />
       <IconMenuButton
@@ -202,9 +216,7 @@ const EditMenu = (props) => {
         icon={options.flatten ? FlattenIcon : FlattenDisabledIcon}
         alt="flatten"
         onClick={() => {
-          let tmp = { ...options };
-          tmp.flatten = !tmp.flatten;
-          setOptions(tmp);
+          toggleMenu("flatten");
         }}
       />
       <IconMenuButton
@@ -266,7 +278,8 @@ const EditMenu = (props) => {
         </div>
       )}
       {showMenu.blur && (
-        <div className="absolute top-16 left-[300px] bg-[#215FF6] w-[200px] h-[40px] justify-center items-center flex rounded-xl">
+        <div className="absolute top-16 left-[300px] bg-[#215FF6] w-[250px] h-[50px] justify-center items-center flex rounded-xl">
+          <p className="mx-2">Blur (%)</p>
           <SliderMenu
             min={0}
             max={100}
@@ -279,6 +292,42 @@ const EditMenu = (props) => {
       {showMenu.tint && (
         <div className="absolute top-16 left-[575px]">
           <TintMenu value={options.tint} onChange={handleTintChange} />
+        </div>
+      )}
+      {showMenu.flatten && (
+        <div className="absolute top-16 left-[375px]">
+          <FlattenMenu
+            val={options.flatten}
+            onChange={(e) => {
+              let tmp = { ...options };
+              tmp.flatten = e.target.value;
+              setOptions(tmp);
+            }}
+          />
+        </div>
+      )}
+      {showMenu.rotate && (
+        <div className="absolute top-16 left-[125px]">
+          <RotateMenu
+            val={options.rotate}
+            onChange={(e) => {
+              let tmp = { ...options };
+              tmp.rotate = e.target.value;
+              setOptions(tmp);
+            }}
+          />
+        </div>
+      )}
+      {showMenu.median && (
+        <div className="absolute top-16 left-[225px]">
+          <MedianMenu
+            val={options.median}
+            onChange={(e) => {
+              let tmp = { ...options };
+              tmp.median = e.target.value;
+              setOptions(tmp);
+            }}
+          />
         </div>
       )}
     </div>
@@ -352,7 +401,7 @@ const ResizeMenu = (props) => {
       <InputBox
         type="number"
         id="width"
-        text="Width"
+        text="Width (px)"
         onChange={props.onChange}
         value={props.wVal}
         min="0"
@@ -360,7 +409,7 @@ const ResizeMenu = (props) => {
       <InputBox
         type="number"
         id="height"
-        text="Height"
+        text="Height (px)"
         onChange={props.onChange}
         value={props.hVal}
         min="0"
@@ -398,6 +447,46 @@ const TintMenu = (props) => {
         value={props.value.b}
         min="0"
         max="255"
+      />
+    </div>
+  );
+};
+
+const FlattenMenu = (props) => {
+  return (
+    <div className="w-[200px] h-[60px] bg-[#215FF6] flex flex-col gap-3 items-center justify-center rounded-xl">
+      <InputBox
+        type="text"
+        id="flatten"
+        text="Background (#)"
+        onChange={props.onChange}
+        value={props.val}
+      />
+    </div>
+  );
+};
+const RotateMenu = (props) => {
+  return (
+    <div className="w-[200px] h-[60px] bg-[#215FF6] flex flex-col gap-3 items-center justify-center rounded-xl">
+      <InputBox
+        type="number"
+        id="rotate"
+        text="Angle (°)"
+        onChange={props.onChange}
+        value={props.val}
+      />
+    </div>
+  );
+};
+const MedianMenu = (props) => {
+  return (
+    <div className="w-[200px] h-[60px] bg-[#215FF6] flex flex-col gap-3 items-center justify-center rounded-xl">
+      <InputBox
+        type="number"
+        id="median"
+        text="Median"
+        onChange={props.onChange}
+        value={props.val}
       />
     </div>
   );
