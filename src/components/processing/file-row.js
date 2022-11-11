@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CloseIcon from "./close.svg";
 import FileLogo from "../../svg/file.svg";
 import EditMenu from "./edit-menu";
@@ -6,6 +6,17 @@ const OPTIONS = ["JPEG", "PNG", "GIF", "TIFF", "WEBP"];
 const FileRow = (props) => {
   const [option, setOption] = useState("...");
   const [popup, setPopup] = useState(false);
+  const [processOptions, setProcessOptions] = useState({});
+
+  useEffect(() => {
+    console.log(processOptions);
+  }, [processOptions]);
+
+  const updateProcessOptions = (options) => {
+    // console.log(options);
+    setProcessOptions(options);
+  };
+
   const file = props.file;
 
   function humanFileSize(size) {
@@ -65,7 +76,7 @@ const FileRow = (props) => {
         </button>
         {popup && (
           <div className="absolute top-16 -left-[300px] z-50">
-            <EditMenu file={file} />
+            <EditMenu file={file} onUpdate={updateProcessOptions} />
           </div>
         )}
       </div>
