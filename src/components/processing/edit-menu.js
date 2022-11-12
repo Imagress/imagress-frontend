@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FlipHorizontalIcon from "../../svg/flip-horizontal.svg";
 import FlipVerticalIcon from "../../svg/flip-vertical.svg";
 import ResizeIcon from "../../svg/resize.svg";
@@ -40,6 +40,13 @@ const EditMenu = (props) => {
     greyscale: false,
     rotate: 0,
   });
+  useEffect(() => {
+    // props.onUpdate(options);
+
+    if (options) {
+      props.onUpdate(options);
+    }
+  }, [options]);
 
   const [showMenu, setShowMenu] = useState({
     resize: false,
@@ -101,10 +108,10 @@ const EditMenu = (props) => {
     let tmp = { ...options };
     switch (e.target.id) {
       case "sharpen":
-        tmp.sharpen = val;
+        tmp.sharpen = parseInt(val);
         break;
       case "blur":
-        tmp.blur = val;
+        tmp.blur = parseInt(val);
         break;
       default:
         break;

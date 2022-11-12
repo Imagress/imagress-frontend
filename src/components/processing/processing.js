@@ -21,7 +21,7 @@ const ProcessingComponent = (props) => {
       {files.map((file, index) => {
         return (
           <Fragment key={index}>
-            <FileRow file={file} onRemove={removeFile} />
+            <FileRow file={file} onRemove={removeFile} index={index}/>
           </Fragment>
         );
       })}
