@@ -41,6 +41,8 @@ const EditMenu = (props) => {
     rotate: 0,
   });
   useEffect(() => {
+    // props.onUpdate(options);
+
     if (options) {
       props.onUpdate(options);
     }
