@@ -101,63 +101,78 @@ const FileRow = (props) => {
     // setB64(b64image);
     let payload = {
       image: b64,
-      rotate: parseInt(processOptions.rotate),
-      flip: {
-        x: processOptions.flipHorizontal,
-        y: processOptions.flipVertical,
-      },
-      sharpen: {
-        options: {
-          sigma: 1,
-          m1: parseInt(processOptions.sharpen / 100),
-          m2: parseInt(processOptions.sharpen / 100) * 2,
-          x1: parseInt(processOptions.sharpen / 100) * 2,
-          y2: parseInt(processOptions.sharpen / 100) * 10,
-          y3: parseInt(processOptions.sharpen / 100) * 20,
+      ...(processOptions.rotate && {
+        rotate: parseInt(processOptions.rotate),
+      }),
+      ...((processOptions.flipHorizontal || processOptions.flipVertical) && {
+        flip: {
+          x: processOptions.flipHorizontal,
+          y: processOptions.flipVertical,
+        },
+      }),
+      ...{
+        sharpen: {
+          options: {
+            sigma: 1,
+            m1: parseInt(processOptions.sharpen / 100),
+            m2: parseInt(processOptions.sharpen / 100) * 2,
+            x1: parseInt(processOptions.sharpen / 100) * 2,
+            y2: parseInt(processOptions.sharpen / 100) * 10,
+            y3: parseInt(processOptions.sharpen / 100) * 20,
+          },
         },
       },
-      median: {
-        size: processOptions.median ? parseInt(processOptions.median) : null,
-      },
-      blur: {
-        sigma: processOptions.blur ? parseInt(processOptions.blur) : null,
-      },
-      flatten: {
-        options: {
-          background: processOptions.flatten
-            ? `#${processOptions.flatten}`
-            : null,
+      ...(processOptions.median && {
+        median: {
+          size: parseInt(processOptions.median),
         },
-      },
-      negate: {
-        options: {
-          alpha: processOptions.negate,
+      }),
+      ...(processOptions.blur && {
+        blur: {
+          sigma: parseInt(processOptions.blur),
         },
-      },
-      normalise: processOptions.normalize,
+      }),
+      ...(processOptions.flatten !== "" && {
+        flatten: {
+          options: {
+            background: `#${processOptions.flatten}`,
+          },
+        },
+      }),
+      ...(processOptions.negate && {
+        negate: {
+          options: {
+            alpha: processOptions.negate,
+          },
+        },
+      }),
+      ...(processOptions.normalize && { normalise: processOptions.normalize }),
       format:
         fileFormatOption.toLowerCase() === "..."
           ? null
           : fileFormatOption.toLowerCase(),
       resize: {
-        width: processOptions.resize.width
-          ? parseInt(processOptions.resize.width)
-          : null,
-        height: processOptions.resize.height
-          ? parseInt(processOptions.resize.width)
-          : null,
+        ...(processOptions.resize.width && {
+          width: parseInt(processOptions.resize.width),
+        }),
+        ...(processOptions.resize.height && {
+          height: parseInt(processOptions.resize.width),
+        }),
       },
-      tint: {
-        rgb: {
-          r: parseInt(processOptions.tint.r),
-          g: parseInt(processOptions.tint.g),
-          b: parseInt(processOptions.tint.b),
+      ...((processOptions.tint.r ||
+        processOptions.tint.g ||
+        processOptions.tint.b) && {
+        tint: {
+          rgb: {
+            r: parseInt(processOptions.tint.r),
+            g: parseInt(processOptions.tint.g),
+            b: parseInt(processOptions.tint.b),
+          },
         },
-      },
-      greyscale: processOptions.greyscale,
+      }),
+      ...(processOptions.greyscale && { greyscale: processOptions.greyscale }),
     };
 
-    // console.log(payload);
     // console.log(JSON.stringify(payload));
     let response = await convertAPI(payload);
     // console.log(`response from api ${response}`);
