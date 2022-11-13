@@ -106,8 +106,8 @@ const FileRow = (props) => {
       }),
       ...((processOptions.flipHorizontal || processOptions.flipVertical) && {
         flip: {
-          x: processOptions.flipHorizontal,
-          y: processOptions.flipVertical,
+          x: processOptions.flipVertical,
+          y: processOptions.flipHorizontal,
         },
       }),
       ...{
