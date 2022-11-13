@@ -103,8 +103,8 @@ const FileRow = (props) => {
       image: b64,
       rotate: parseInt(processOptions.rotate),
       flip: {
-        x: processOptions.flipHorizontal,
-        y: processOptions.flipVertical,
+        x: processOptions.flipVertical,
+        y: processOptions.flipHorizontal,
       },
       sharpen: {
         options: {
