@@ -1,6 +1,7 @@
 const { test, expect } = require("@playwright/test");
 
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page },testInfo) => {
+  testInfo.snapshotSuffix = '';
   await page.goto("https://www.imagress.com/");
 });
 
