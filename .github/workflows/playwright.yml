@@ -1,12 +1,19 @@
 name: E2E Playwright Tests
 on:
-  pull_request:
+  push:
     branches: [main]
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
+      - name: Wait for Deployment to succeed
+        uses: lewagon/wait-on-check-action@v1.2.0
+        with:
+          ref: ${{ github.ref }}
+          check-name: 'Deploy to Vercel CI'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
