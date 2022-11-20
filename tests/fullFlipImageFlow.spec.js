@@ -9,7 +9,7 @@ test.describe("Upload image and flip x and y", () => {
   test("should allow to upload and download image", async ({ page }) => {
     const logo = page.locator("#root > div > div.cursor-pointer > div > img");
     await expect(logo).toHaveAttribute("src", "/images/imagress-logo.png");
-    await expect(page).toHaveScreenshot("1home.png", { maxDiffPixels: 100 });
+    await expect(page).toHaveScreenshot("1home.png", { maxDiffPixels: 1000 });
 
     await page
       .locator('input[type="file"]')
@@ -20,7 +20,7 @@ test.describe("Upload image and flip x and y", () => {
     const editButton = await page.waitForSelector(
       "div:nth-child(3) > div > button"
     );
-    await expect(page).toHaveScreenshot("2clickEdit.png", { maxDiffPixels: 100 });
+    await expect(page).toHaveScreenshot("2clickEdit.png", { maxDiffPixels: 1000 });
     await editButton.click();
 
     await page.waitForSelector(
@@ -31,10 +31,10 @@ test.describe("Upload image and flip x and y", () => {
       "div.flex.flex-row.justify-center.items-center.gap-2 > select"
     );
     await fileType.selectOption("PNG");
-    await expect(page).toHaveScreenshot("selectFileType.png", { maxDiffPixels: 100 });
+    await expect(page).toHaveScreenshot("selectFileType.png", { maxDiffPixels: 1000 });
 
     const editFile = await page.locator("div > div.relative > button");
-    await expect(page).toHaveScreenshot("3clickEditFile.png", { maxDiffPixels: 100 });
+    await expect(page).toHaveScreenshot("3clickEditFile.png", { maxDiffPixels: 1000 });
     await editFile.click();
 
     await page.waitForFunction(() => {
@@ -52,14 +52,14 @@ test.describe("Upload image and flip x and y", () => {
     });
 
     const img = page.locator("div.relative > div > div > img:nth-child(1)");
-    await expect(page).toHaveScreenshot("4clickFlipHorizontal.png", { maxDiffPixels: 100 });
+    await expect(page).toHaveScreenshot("4clickFlipHorizontal.png", { maxDiffPixels: 1000 });
     await img.click();
 
     const done = page.locator(
       "div.w-full.rounded-3xl.px-10.py-5.gap-3.flex.flex-col.overflow-y-scroll > div > button"
     );
 
-    await expect(page).toHaveScreenshot("5clickDone.png", { maxDiffPixels: 100 });
+    await expect(page).toHaveScreenshot("5clickDone.png", { maxDiffPixels: 1000 });
     const [request] = await Promise.all([
       // Waits for the next request with the specified url
       page.waitForRequest("https://api.imagress.com/convert"),
@@ -77,6 +77,6 @@ test.describe("Upload image and flip x and y", () => {
       page.waitForEvent("download"),
       download.click(),
     ]);
-    await expect(page).toHaveScreenshot("6Downloaded.png", { maxDiffPixels: 100 });
+    await expect(page).toHaveScreenshot("6Downloaded.png", { maxDiffPixels: 1000 });
   });
 });
