@@ -9,7 +9,7 @@ test.describe("Upload image and flip x and y", () => {
   test("should allow to upload and download image", async ({ page }) => {
     const logo = page.locator("#root > div > div.cursor-pointer > div > img");
     await expect(logo).toHaveAttribute("src", "/images/imagress-logo.png");
-    await expect(page).toHaveScreenshot("1home.png", { maxDiffPixels: 1500 });
+    await expect(page).toHaveScreenshot("1home.png", { maxDiffPixels: 12000 });
 
     await page
       .locator('input[type="file"]')
@@ -21,7 +21,7 @@ test.describe("Upload image and flip x and y", () => {
       "div:nth-child(3) > div > button"
     );
     await expect(page).toHaveScreenshot("2clickEdit.png", {
-      maxDiffPixels: 1500,
+      maxDiffPixels: 12000,
     });
     await editButton.click();
 
@@ -32,12 +32,12 @@ test.describe("Upload image and flip x and y", () => {
     );
     await fileType.selectOption("PNG");
     await expect(page).toHaveScreenshot("selectFileType.png", {
-      maxDiffPixels: 1500,
+      maxDiffPixels: 12000,
     });
 
     const editFile = await page.locator("div > div.relative > button");
     await expect(page).toHaveScreenshot("3clickEditFile.png", {
-      maxDiffPixels: 1500,
+      maxDiffPixels: 12000,
     });
     await editFile.click();
 
@@ -57,7 +57,7 @@ test.describe("Upload image and flip x and y", () => {
 
     const img = page.locator("div.relative > div > div > img:nth-child(1)");
     await expect(page).toHaveScreenshot("4clickFlipHorizontal.png", {
-      maxDiffPixels: 1500,
+      maxDiffPixels: 12000,
     });
     await img.click();
 
@@ -66,7 +66,7 @@ test.describe("Upload image and flip x and y", () => {
     );
 
     await expect(page).toHaveScreenshot("5clickDone.png", {
-      maxDiffPixels: 1500,
+      maxDiffPixels: 12000,
     });
     const [request] = await Promise.all([
       // Waits for the next request with the specified url
@@ -86,7 +86,7 @@ test.describe("Upload image and flip x and y", () => {
       download.click(),
     ]);
     await expect(page).toHaveScreenshot("6Downloaded.png", {
-      maxDiffPixels: 1500,
+      maxDiffPixels: 12000,
     });
   });
 });
